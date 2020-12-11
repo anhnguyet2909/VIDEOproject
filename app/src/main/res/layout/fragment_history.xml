@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:padding="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnDelete"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_alignParentRight="true"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/btnDelete"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvHistory"/>
+    </RelativeLayout>
+
+</layout>
