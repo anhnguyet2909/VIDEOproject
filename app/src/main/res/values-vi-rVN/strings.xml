@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VIDEO</string>
+    <string name="relative_video">Video liên quan</string>
+    <string name="delete_confirm">Bạn chắc chắn muốn xóa lịch sử xem?</string>
+    <string name="deleted">Đã xóa lịch sử xem</string>
+    <string name="yes">Đồng ý</string>
+    <string name="no">Từ chối</string>
+    <string name="add">Đã thêm vào yêu thích</string>
+    <string name="remove">Đã xóa khỏi yêu thích</string>
+    <string name="hot_video">Nổi bật</string>
+    <string name="categories">Thể loại</string>
+    <string name="history">Lịch sử</string>
+    <string name="favorite">Yêu thích</string>
+    <string name="about">Thông tin</string>
+    <string name="favorite_list">Danh sách yêu thích</string>
+</resources>

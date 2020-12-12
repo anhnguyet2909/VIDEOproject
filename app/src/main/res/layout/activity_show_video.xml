@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:background="@drawable/bg_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -15,9 +14,9 @@
             android:layout_height="@dimen/_200sdp">
 
             <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/playerView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
-                android:id="@+id/playerView"
                 app:controller_layout_id="@layout/custom_control"
                 app:fastforward_increment="10000"
                 app:hide_on_touch="true"
@@ -33,10 +32,10 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_toLeftOf="@id/imgUnlike"
                 android:id="@+id/tvVideoName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/imgUnlike" />
 
             <ImageView
                 android:id="@+id/imgUnlike"
@@ -59,23 +58,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/relative_video"/>
+                android:text="@string/relative_video"
+                android:textColor="@color/white" />
+
             <View
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:layout_gravity="center"
-                android:background="@color/white"/>
+                android:background="@color/white" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="@dimen/_7sdp"
-            android:id="@+id/rvRelativeVideos"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRelativeVideos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_7sdp" />
+        </RelativeLayout>
     </LinearLayout>
 
 </layout>

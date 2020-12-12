@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">VIDEO</string>
-    <string name="ad_tag_url"><![CDATA[https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=]]></string>
+    <string name="ad_tag_url" translatable="false"><![CDATA[https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=]]></string>
     <string name="relative_video">Related videos</string>
+    <string name="delete_confirm">Are you sure you want to delete your viewing history?</string>
+    <string name="deleted">Deleted view history</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="add">Added to favorite</string>
+    <string name="remove">Removed from favorite</string>
+    <string name="hot_video">Hot Videos</string>
+    <string name="categories">Categories</string>
+    <string name="history">History</string>
+    <string name="favorite">Favorite</string>
+    <string name="about">About</string>
+    <string name="favorite_list">Favorite list</string>
 </resources>

@@ -1,12 +1,16 @@
 package com.example.video;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,11 +51,28 @@ public class HistoryFragment extends Fragment {
         binding.rvHistory.setAdapter(adapterHistory);
 
         binding.btnDelete.setOnClickListener(v->{
-            sqlHelperHistory.deleteAllVideo();
-            list=sqlHelperHistory.getAllFoods();
-            adapterHistory = new AdapterHistory(list);
-            binding.rvHistory.setLayoutManager(layoutManager);
-            binding.rvHistory.setAdapter(adapterHistory);
+            AlertDialog alertDialog=new AlertDialog.Builder(getContext())
+                    .setTitle(getString(R.string.delete_confirm))
+                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sqlHelperHistory.deleteAllVideo();
+                            list=sqlHelperHistory.getAllFoods();
+                            adapterHistory = new AdapterHistory(list);
+                            binding.rvHistory.setLayoutManager(layoutManager);
+                            binding.rvHistory.setAdapter(adapterHistory);
+                            Toast.makeText(getContext(), getString(R.string.deleted), Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .create();
+            alertDialog.show();
+
         });
         return binding.getRoot();
     }

@@ -30,7 +30,6 @@ import java.util.List;
 
 public class HotVideosFragment extends Fragment {
     FragmentHotvideosBinding binding;
-    SQLHelperHistory sqlHelperHistory=new SQLHelperHistory(getContext());
 
     String hotVideosURL= DeFile.HOT_VIDEOS_URL;
     String result = "";
