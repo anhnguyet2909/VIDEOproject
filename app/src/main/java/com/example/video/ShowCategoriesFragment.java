@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -109,10 +110,21 @@ public class ShowCategoriesFragment extends Fragment {
             getCategoriesURL=DeFile.GET_CATEGORIES1_URL;
         else
             getCategoriesURL=DeFile.GET_CATEGORIES2_URL;
+        String name=sharedPreferences.getString("name", "");
+        binding.tvCategoriesName.setText(name);
 
         new GetData().execute();
-
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle=new Bundle();
+                CategoriesFragment fragment=new CategoriesFragment();
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
+            }
+        });
         return binding.getRoot();
     }
+
 
 }

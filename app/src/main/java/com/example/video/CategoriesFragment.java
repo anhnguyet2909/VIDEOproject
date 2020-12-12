@@ -80,6 +80,7 @@ public class CategoriesFragment extends Fragment {
                             SharedPreferences sharedPreferences= getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putInt("id", categories.getId());
+                            editor.putString("name", categories.getTitle());
                             editor.commit();
                             Bundle bundle=new Bundle();
                             ShowCategoriesFragment fragment=new ShowCategoriesFragment();
