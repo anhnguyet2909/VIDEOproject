@@ -43,6 +43,14 @@ public class SQLHelperFavorite extends SQLiteOpenHelper {
         }
     }
 
+    public boolean checkLike(HotVideos videos){
+        sqLiteDatabase=getWritableDatabase();
+        cursor=sqLiteDatabase.rawQuery("Select * from "+DB_TABLE_VIDEO+" where id="+videos.getId(), null);
+        if (cursor.getCount()==1)
+            return true;
+        return false;
+    }
+
     public void insertVideo(HotVideos videos) {
         sqLiteDatabase = getWritableDatabase();
         contentValues = new ContentValues();

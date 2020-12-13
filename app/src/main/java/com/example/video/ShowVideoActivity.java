@@ -44,7 +44,7 @@ public class ShowVideoActivity extends AppCompatActivity {
     SQLHelperHistory sqlHelperHistory=new SQLHelperHistory(this);
     String name, videoURL, avt;
     int id;
-    String relatedVideos= DeFile.GET_CATEGORIES1_URL;
+    String relatedVideos= DeFile.GET_RELATED_VIDEOS_URL;
     String result = "";
     String jArray = "";
     List<HotVideos> list=new ArrayList<>();
@@ -150,6 +150,10 @@ public class ShowVideoActivity extends AppCompatActivity {
         // Set PlayWhenReady. If true, content and ads autoplay.
         player.setPlayWhenReady(true);
         like();
+        if(sqlHelperFavorite.checkLike(v)){
+            binding.imgUnlike.setVisibility(View.INVISIBLE);
+            binding.imgLike.setVisibility(View.VISIBLE);
+        }
     }
     @Override
     public void onStart() {

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             binding.v2.setVisibility(View.INVISIBLE);
             binding.v3.setVisibility(View.INVISIBLE);
             binding.v4.setVisibility(View.INVISIBLE);
+            binding.v5.setVisibility(View.INVISIBLE);
         });
         binding.llCategories.setOnClickListener(v->{
             getFragment(CategoriesFragment.newInstance());
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             binding.v1.setVisibility(View.INVISIBLE);
             binding.v3.setVisibility(View.INVISIBLE);
             binding.v4.setVisibility(View.INVISIBLE);
+            binding.v5.setVisibility(View.INVISIBLE);
         });
         binding.llHistory.setOnClickListener(v->{
             getFragment(HistoryFragment.newInstance());
@@ -41,10 +43,21 @@ public class MainActivity extends AppCompatActivity {
             binding.v1.setVisibility(View.INVISIBLE);
             binding.v2.setVisibility(View.INVISIBLE);
             binding.v4.setVisibility(View.INVISIBLE);
+            binding.v5.setVisibility(View.INVISIBLE);
         });
         binding.llSetting.setOnClickListener(v->{
             getFragment(SettingFragment.newInstance());
             binding.v4.setVisibility(View.VISIBLE);
+            binding.v1.setVisibility(View.INVISIBLE);
+            binding.v2.setVisibility(View.INVISIBLE);
+            binding.v3.setVisibility(View.INVISIBLE);
+            binding.v5.setVisibility(View.INVISIBLE);
+        });
+
+        binding.llFavorite.setOnClickListener(v->{
+            getFragment(FavoriteFragment.newInstance());
+            binding.v5.setVisibility(View.VISIBLE);
+            binding.v4.setVisibility(View.INVISIBLE);
             binding.v1.setVisibility(View.INVISIBLE);
             binding.v2.setVisibility(View.INVISIBLE);
             binding.v3.setVisibility(View.INVISIBLE);

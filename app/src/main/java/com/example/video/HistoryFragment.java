@@ -1,7 +1,10 @@
 package com.example.video;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +52,21 @@ public class HistoryFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         binding.rvHistory.setLayoutManager(layoutManager);
         binding.rvHistory.setAdapter(adapterHistory);
+
+        adapterHistory.setOnItemClick(new onItemClick() {
+            @Override
+            public void onImageViewClick(HotVideos videos) {
+                Intent intent=new Intent(getContext(), ShowVideoActivity.class);
+                SharedPreferences sharedPreferences= getActivity().getSharedPreferences("data1", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("link", videos.getFile_mp4());
+                editor.putString("name", videos.getTitle());
+                editor.putString("avt", videos.getAvatar());
+                editor.putInt("id", videos.getId());
+                editor.commit();
+                startActivity(intent);
+            }
+        });
 
         binding.btnDelete.setOnClickListener(v->{
             AlertDialog alertDialog=new AlertDialog.Builder(getContext())

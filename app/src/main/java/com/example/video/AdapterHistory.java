@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,9 +16,13 @@ import java.util.List;
 
 public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHolder> {
     List<HotVideos> list;
+    onItemClick onItemClick;
 
     public AdapterHistory(List<HotVideos> list) {
         this.list = list;
+    }
+    public void setOnItemClick(onItemClick onItemClick){
+        this.onItemClick=onItemClick;
     }
 
     @NonNull
@@ -36,6 +41,12 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
         final HotVideos hv=list.get(position);
         Picasso.get().load(hv.getAvatar()).into(holder.imgVideoThumb);
         holder.tvVideoTitle.setText(hv.getTitle());
+        holder.llVideos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick.onImageViewClick(hv);
+            }
+        });
     }
 
     @Override
@@ -46,10 +57,12 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgVideoThumb;
         TextView tvVideoTitle;
+        LinearLayout llVideos;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgVideoThumb=itemView.findViewById(R.id.imgVideoThumb);
             tvVideoTitle=itemView.findViewById(R.id.tvVideoTitle);
+            llVideos=itemView.findViewById(R.id.llVideos);
         }
     }
 }
