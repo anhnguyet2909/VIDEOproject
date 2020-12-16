@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +29,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HotVideosFragment extends Fragment {
     FragmentHotvideosBinding binding;
+
+    AdapterPhoto adapterPhoto;
+    List<Image> imageList;
+    Timer timer;
 
     String hotVideosURL= DeFile.HOT_VIDEOS_URL;
     String result = "";
@@ -116,9 +124,65 @@ public class HotVideosFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding= DataBindingUtil.inflate(inflater, R.layout.fragment_hotvideos, container, false);
+        imageList=getListPhoto();
+        adapterPhoto=new AdapterPhoto(getContext(), imageList);
+        binding.viewPhoto.setAdapter(adapterPhoto);
+        binding.circleIndicator.setViewPager(binding.viewPhoto);
+        adapterPhoto.registerDataSetObserver(binding.circleIndicator.getDataSetObserver());
+        autoSlide();
         new GetData().execute();
 
         return binding.getRoot();
+    }
+
+    private List<Image> getListPhoto() {
+        List<Image> list=new ArrayList<>();
+
+        list.add(new Image(R.drawable.op1));
+        list.add(new Image(R.drawable.it2));
+        list.add(new Image(R.drawable.dctc));
+        list.add(new Image(R.drawable.conan));
+        list.add(new Image(R.drawable.trailer4));
+
+        return list;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(timer!=null){
+            timer.cancel();
+            timer=null;
+        }
+    }
+
+    private void autoSlide(){
+        if(imageList==null  || imageList.isEmpty() || binding.viewPhoto==null){
+            return;
+        }
+        if(timer==null){
+            timer=new Timer();
+        }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem=binding.viewPhoto.getCurrentItem();
+                        int totalItem=imageList.size()-1;
+                        if(currentItem<totalItem){
+                            currentItem++;
+                            binding.viewPhoto.setCurrentItem(currentItem);
+                        }
+                        else{
+                            binding.viewPhoto.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        }, 500, 3000);
+
     }
 
 }

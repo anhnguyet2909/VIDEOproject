@@ -26,6 +26,8 @@ public class FavoriteFragment extends Fragment {
     AdapterFavorite adapterFavorite;
     SQLHelperFavorite sqlHelperFavorite;
 
+    public FavoriteFragment(){}
+
     public static FavoriteFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -64,4 +66,5 @@ public class FavoriteFragment extends Fragment {
 
         return binding.getRoot();
     }
+
 }

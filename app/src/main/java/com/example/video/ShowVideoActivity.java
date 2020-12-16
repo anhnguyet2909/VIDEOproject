@@ -1,6 +1,7 @@
 package com.example.video;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -39,64 +40,63 @@ public class ShowVideoActivity extends AppCompatActivity {
     private SimpleExoPlayer player;
     private ImaAdsLoader adsLoader;
     ImageView btnFull, btnPause;
-    boolean flag=false;
-    boolean check=false;
-    SQLHelperHistory sqlHelperHistory=new SQLHelperHistory(this);
+    boolean flag = false;
+    boolean check = false;
+    SQLHelperHistory sqlHelperHistory = new SQLHelperHistory(this);
     String name, videoURL, avt;
     int id;
-    String relatedVideos= DeFile.GET_RELATED_VIDEOS_URL;
+    String relatedVideos = DeFile.GET_RELATED_VIDEOS_URL;
     String result = "";
     String jArray = "";
-    List<HotVideos> list=new ArrayList<>();
+    List<HotVideos> list = new ArrayList<>();
     AdapterRelatedVideos adapterRelatedVideos;
     HotVideos video;
-    SQLHelperFavorite sqlHelperFavorite=new SQLHelperFavorite(this);
+    SQLHelperFavorite sqlHelperFavorite = new SQLHelperFavorite(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=DataBindingUtil.setContentView(this, R.layout.activity_show_video);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_show_video);
         adsLoader = new ImaAdsLoader(this, Uri.parse(getString(R.string.ad_tag_url)));
 
-        SharedPreferences sharedPreferences= getBaseContext().getSharedPreferences("data1", Context.MODE_PRIVATE);
-        name=sharedPreferences.getString("name", "");
-        videoURL=sharedPreferences.getString("link", "");
-        avt=sharedPreferences.getString("avt", "");
-        id=sharedPreferences.getInt("id", 0);
-        video=new HotVideos(id, name, avt, videoURL);
+        SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("data1", Context.MODE_PRIVATE);
+        name = sharedPreferences.getString("name", "");
+        videoURL = sharedPreferences.getString("link", "");
+        avt = sharedPreferences.getString("avt", "");
+        id = sharedPreferences.getInt("id", 0);
+        video = new HotVideos(id, name, avt, videoURL);
 
         new GetData().execute();
 
-        btnFull=binding.playerView.findViewById(R.id.btnFull);
+        btnFull = binding.playerView.findViewById(R.id.btnFull);
         btnFull.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(flag){
+                if (flag) {
                     btnFull.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_fullscreen_24));
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    flag=false;
-                }
-                else {
+                    binding.playerView.setPivotX(binding.llShowVideo.getWidth());
+                    binding.playerView.setPivotY(binding.llShowVideo.getHeight());
+                    flag = false;
+                } else {
                     btnFull.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_fullscreen_exit_24));
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    flag=true;
+                    flag = true;
                 }
             }
         });
-        btnPause=binding.playerView.findViewById(R.id.btnPause);
-        btnPause.setOnClickListener(a->{
-            if(check){
+        btnPause = binding.playerView.findViewById(R.id.btnPause);
+        btnPause.setOnClickListener(a -> {
+            if (check) {
                 player.setPlayWhenReady(true);
-                check=false;
+                check = false;
                 btnPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_pause_24));
-            }
-            else{
+            } else {
                 player.setPlayWhenReady(false);
-                check=true;
+                check = true;
                 btnPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24));
             }
         });
     }
+
     private void releasePlayer() {
         adsLoader.setPlayer(null);
         binding.playerView.setPlayer(null);
@@ -104,14 +104,14 @@ public class ShowVideoActivity extends AppCompatActivity {
         player = null;
     }
 
-    public void like(){
-        binding.imgUnlike.setOnClickListener(v->{
+    public void like() {
+        binding.imgUnlike.setOnClickListener(v -> {
             binding.imgUnlike.setVisibility(View.INVISIBLE);
             binding.imgLike.setVisibility(View.VISIBLE);
             sqlHelperFavorite.insertVideo(video);
             Toast.makeText(getBaseContext(), getString(R.string.add), Toast.LENGTH_LONG).show();
         });
-        binding.imgLike.setOnClickListener(v->{
+        binding.imgLike.setOnClickListener(v -> {
             binding.imgUnlike.setVisibility(View.VISIBLE);
             binding.imgLike.setVisibility(View.INVISIBLE);
             sqlHelperFavorite.deleteVideo(video.getId());
@@ -123,7 +123,7 @@ public class ShowVideoActivity extends AppCompatActivity {
         // Create a SimpleExoPlayer and set it as the player for content and ads.
         player = new SimpleExoPlayer.Builder(this).build();
 
-        HotVideos v=new HotVideos(id,name,avt,videoURL);
+        HotVideos v = new HotVideos(id, name, avt, videoURL);
         sqlHelperHistory.insertVideo(v);
 
         binding.tvVideoName.setText(name);
@@ -150,11 +150,12 @@ public class ShowVideoActivity extends AppCompatActivity {
         // Set PlayWhenReady. If true, content and ads autoplay.
         player.setPlayWhenReady(true);
         like();
-        if(sqlHelperFavorite.checkLike(v)){
+        if (sqlHelperFavorite.checkLike(v)) {
             binding.imgUnlike.setVisibility(View.INVISIBLE);
             binding.imgLike.setVisibility(View.VISIBLE);
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -206,7 +207,7 @@ public class ShowVideoActivity extends AppCompatActivity {
         adsLoader.release();
     }
 
-    class GetData extends AsyncTask<Void, Void, Void>{
+    class GetData extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -218,9 +219,9 @@ public class ShowVideoActivity extends AppCompatActivity {
                 int byteCharacter;
 
                 while ((byteCharacter = inputStream.read()) != -1) {
-                    result+=(char)byteCharacter;
+                    result += (char) byteCharacter;
                 }
-                jArray=result;
+                jArray = result;
                 binding.pbLoading.setVisibility(View.VISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -231,36 +232,35 @@ public class ShowVideoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             binding.pbLoading.setVisibility(View.INVISIBLE);
-            try{
-                JSONArray jsonArray=new JSONArray(jArray);
-                for(int i=0; i<jsonArray.length(); i++){
-                    JSONObject jsonObject=jsonArray.getJSONObject(i);
-                    int id=jsonObject.getInt(DeFile.ID);
-                    String title=jsonObject.getString(DeFile.TITLE);
-                    String avatar=jsonObject.getString(DeFile.AVATAR);
-                    String file_mp4=jsonObject.getString(DeFile.FILE_MP4);
-                    HotVideos hv=new HotVideos(id,title,avatar,file_mp4);
+            try {
+                JSONArray jsonArray = new JSONArray(jArray);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    int id = jsonObject.getInt(DeFile.ID);
+                    String title = jsonObject.getString(DeFile.TITLE);
+                    String avatar = jsonObject.getString(DeFile.AVATAR);
+                    String file_mp4 = jsonObject.getString(DeFile.FILE_MP4);
+                    HotVideos hv = new HotVideos(id, title, avatar, file_mp4);
                     list.add(hv);
                 }
-                adapterRelatedVideos=new AdapterRelatedVideos(list);
-                RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getBaseContext(), RecyclerView.VERTICAL, false);
+                adapterRelatedVideos = new AdapterRelatedVideos(list);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), RecyclerView.VERTICAL, false);
                 binding.rvRelativeVideos.setLayoutManager(layoutManager);
                 binding.rvRelativeVideos.setAdapter(adapterRelatedVideos);
                 adapterRelatedVideos.setOnItemClick(new onItemClick() {
                     @Override
                     public void onImageViewClick(HotVideos videos) {
-                        id=videos.getId();
-                        name=videos.getTitle();
-                        avt=videos.getAvatar();
-                        videoURL=videos.getFile_mp4();
+                        id = videos.getId();
+                        name = videos.getTitle();
+                        avt = videos.getAvatar();
+                        videoURL = videos.getFile_mp4();
                         player.setPlayWhenReady(false);
                         binding.imgUnlike.setVisibility(View.VISIBLE);
                         binding.imgLike.setVisibility(View.INVISIBLE);
                         initializePlayer();
                     }
                 });
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

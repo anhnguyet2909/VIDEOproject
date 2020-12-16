@@ -42,22 +42,16 @@ public class SQLHelperHistory extends SQLiteOpenHelper {
         }
     }
 
-    public boolean checkExist(int id) {
-        String[] columns = {DeFile.ID};
-        sqLiteDatabase = getWritableDatabase();
-        String selection = DeFile.ID + "=?";
-        String[] selectionArg = {String.valueOf(id)};
-
-        cursor = sqLiteDatabase.query(DeFile.DB_TABLE_VIDEO,
-                columns, selection, selectionArg, null, null, null);
-
-        if (cursor.getCount() > 0)
+    public boolean checkExist(HotVideos videos) {
+        sqLiteDatabase=getWritableDatabase();
+        cursor=sqLiteDatabase.rawQuery("Select * from "+DB_TABLE_VIDEO+" where id="+videos.getId(), null);
+        if (cursor.getCount()==1)
             return true;
         return false;
     }
 
     public void insertVideo(HotVideos videos) {
-        if (checkExist(videos.getId()))
+        if (checkExist(videos))
             deleteVideo(videos.getId());
         sqLiteDatabase = getWritableDatabase();
         contentValues = new ContentValues();

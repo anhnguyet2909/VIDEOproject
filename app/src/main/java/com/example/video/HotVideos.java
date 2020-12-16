@@ -1,5 +1,6 @@
 package com.example.video;
 
+
 public class HotVideos {
     int id;
     String title, avatar, file_mp4;
