@@ -46,6 +46,7 @@ public class FavoriteFragment extends Fragment {
 
         list=sqlHelperFavorite.getAllVideos();
         adapterFavorite=new AdapterFavorite(list);
+
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         binding.rvFavorite.setLayoutManager(layoutManager);
         binding.rvFavorite.setAdapter(adapterFavorite);
@@ -63,7 +64,6 @@ public class FavoriteFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return binding.getRoot();
     }
 

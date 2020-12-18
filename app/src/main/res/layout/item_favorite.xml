@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_100sdp"
+    android:padding="@dimen/_5sdp"
+    android:id="@+id/llVideos">
+
+    <RelativeLayout
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="match_parent"
+        android:id="@+id/rlVideoThumb">
+        <ImageView
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="match_parent"
+            android:id="@+id/imgVideoThumb"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_play_arrow_24"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnClear"
+            android:background="@drawable/bg_btn_clear"
+            android:src="@drawable/ic_baseline_clear_24"
+            android:layout_gravity="right"/>
+        <TextView
+            android:padding="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tvVideoTitle"/>
+    </LinearLayout>
+
+</LinearLayout>

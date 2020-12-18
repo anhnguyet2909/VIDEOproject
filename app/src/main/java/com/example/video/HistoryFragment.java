@@ -53,7 +53,8 @@ public class HistoryFragment extends Fragment {
         binding.rvHistory.setLayoutManager(layoutManager);
         binding.rvHistory.setAdapter(adapterHistory);
 
-        adapterHistory.setOnItemClick(new onItemClick() {
+
+        adapterHistory.setOnItemClick(new onSelectionClick() {
             @Override
             public void onImageViewClick(HotVideos videos) {
                 Intent intent=new Intent(getContext(), ShowVideoActivity.class);
@@ -65,6 +66,13 @@ public class HistoryFragment extends Fragment {
                 editor.putInt("id", videos.getId());
                 editor.commit();
                 startActivity(intent);
+            }
+
+            @Override
+            public void onClearClick(int position) {
+                sqlHelperHistory.deleteVideo(list.get(position).getId());
+                list.remove(position);
+                adapterHistory.notifyDataSetChanged();
             }
         });
 

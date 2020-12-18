@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,7 +52,9 @@ public class ShowVideoActivity extends AppCompatActivity {
     List<HotVideos> list = new ArrayList<>();
     AdapterRelatedVideos adapterRelatedVideos;
     HotVideos video;
+    RatingVideo ratingVideo;
     SQLHelperFavorite sqlHelperFavorite = new SQLHelperFavorite(this);
+    SQLHelperRating sqlHelperRating = new SQLHelperRating(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,21 @@ public class ShowVideoActivity extends AppCompatActivity {
         player = null;
     }
 
+    public void rate() {
+        if(sqlHelperRating.checkRated(video.getId())){
+            binding.ratingBar.setRating(sqlHelperRating.getRating(video.getId()));
+        }
+        RatingVideo ratingVideo = new RatingVideo(video.getId(), binding.ratingBar.getRating());
+        sqlHelperRating.insert(ratingVideo);
+        sqlHelperRating.update(ratingVideo.getId(), binding.ratingBar.getRating());
+        binding.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                sqlHelperRating.update(video.getId(), v);
+            }
+        });
+    }
+
     public void like() {
         binding.imgUnlike.setOnClickListener(v -> {
             binding.imgUnlike.setVisibility(View.INVISIBLE);
@@ -154,6 +172,7 @@ public class ShowVideoActivity extends AppCompatActivity {
             binding.imgUnlike.setVisibility(View.INVISIBLE);
             binding.imgLike.setVisibility(View.VISIBLE);
         }
+        rate();
     }
 
     @Override
