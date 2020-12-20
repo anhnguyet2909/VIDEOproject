@@ -47,8 +47,8 @@
                 <View
                     android:id="@+id/v1"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/red"/>
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/light_blue"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -72,8 +72,8 @@
                     android:id="@+id/v2"
                     android:visibility="invisible"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/red"/>
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/light_blue"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -97,8 +97,8 @@
                     android:id="@+id/v3"
                     android:visibility="invisible"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/red"/>
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/light_blue"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -122,8 +122,8 @@
                     android:id="@+id/v5"
                     android:visibility="invisible"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/red"/>
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/light_blue"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -147,8 +147,8 @@
                     android:id="@+id/v4"
                     android:visibility="invisible"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/red"/>
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/light_blue"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

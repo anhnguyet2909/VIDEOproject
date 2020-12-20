@@ -1,15 +1,17 @@
 package com.example.video;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,6 +57,7 @@ public class ShowVideoActivity extends AppCompatActivity {
     RatingVideo ratingVideo;
     SQLHelperFavorite sqlHelperFavorite = new SQLHelperFavorite(this);
     SQLHelperRating sqlHelperRating = new SQLHelperRating(this);
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +74,24 @@ public class ShowVideoActivity extends AppCompatActivity {
 
         new GetData().execute();
 
+        dialog=new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen){
+            @Override
+            public void onBackPressed() {
+                if(flag){
+                    closeFullscreenDialog();
+                }
+                super.onBackPressed();
+            }
+        };
+
         btnFull = binding.playerView.findViewById(R.id.btnFull);
         btnFull.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (flag) {
-                    btnFull.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_fullscreen_24));
-                    binding.playerView.setPivotX(binding.llShowVideo.getWidth());
-                    binding.playerView.setPivotY(binding.llShowVideo.getHeight());
-                    flag = false;
+                if (!flag) {
+                    openFullscreenDialog();
                 } else {
-                    btnFull.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_fullscreen_exit_24));
-                    flag = true;
+                    closeFullscreenDialog();
                 }
             }
         });
@@ -99,6 +108,27 @@ public class ShowVideoActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void closeFullscreenDialog() {
+        btnFull.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_fullscreen_24));
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ((ViewGroup) binding.playerView.getParent()).removeView(binding.playerView);
+        binding.rlVideo.addView(binding.playerView);
+        dialog.dismiss();
+        flag=false;
+    }
+
+    private void openFullscreenDialog() {
+        btnFull.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_fullscreen_exit_24));
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        ((ViewGroup) binding.playerView.getParent()).removeView(binding.playerView);
+        dialog.addContentView(binding.playerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        dialog.show();
+        flag=true;
+    }
+
+
 
     private void releasePlayer() {
         adsLoader.setPlayer(null);

@@ -5,6 +5,11 @@
         android:padding="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:text="@string/history_list"
+            android:textSize="@dimen/_16sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

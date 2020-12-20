@@ -15,4 +15,8 @@
     <string name="about">About</string>
     <string name="favorite_list">Favorite list</string>
     <string name="rating">Rating</string>
+    <string name="term">Term and Condition</string>
+    <string name="version">Version</string>
+    <string name="contact">Contact us</string>
+    <string name="history_list">History list</string>
 </resources>

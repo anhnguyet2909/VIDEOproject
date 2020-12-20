@@ -57,10 +57,12 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/llRating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/tvRating"
                 android:layout_gravity="center"
                 android:textSize="@dimen/_13sdp"
                 android:layout_width="wrap_content"
@@ -75,11 +77,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvRelated"
                 android:textSize="@dimen/_13sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,6 +91,7 @@
                 android:textColor="@color/white" />
 
             <View
+                android:id="@+id/view"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
@@ -95,6 +100,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rlRelatedVideo"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

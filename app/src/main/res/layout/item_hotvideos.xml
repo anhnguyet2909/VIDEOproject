@@ -15,8 +15,8 @@
             android:id="@+id/ivImgThumbnail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp" />
-
         <ImageView
+            android:background="@drawable/bg_btn_play"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_centerInParent="true"

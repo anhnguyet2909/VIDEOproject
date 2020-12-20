@@ -20,13 +20,12 @@
         <!--                android:layout_height="wrap_content"/>-->
         <!--        </RelativeLayout>-->
         <TextView
-
             android:id="@+id/tvTerm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_assignment_24"
             android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-            android:text="Term and Condition" />
+            android:text="@string/term" />
         <View
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
@@ -41,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_baseline_info_24"
-                android:text="Version" />
+                android:text="@string/version" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,7 +62,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_email_24"
             android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-            android:text="Contact us" />
+            android:text="@string/contact" />
     </LinearLayout>
 
 </layout>
