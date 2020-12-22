@@ -124,6 +124,10 @@ public class ShowVideoActivity extends AppCompatActivity {
         ((ViewGroup) binding.playerView.getParent()).removeView(binding.playerView);
         dialog.addContentView(binding.playerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
+        ViewGroup.LayoutParams params= binding.playerView.findViewById(R.id.rlControl).getLayoutParams();
+        params.width=ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height=ViewGroup.LayoutParams.MATCH_PARENT;
+        binding.playerView.findViewById(R.id.rlControl).setLayoutParams(params);
         dialog.show();
         flag=true;
     }
