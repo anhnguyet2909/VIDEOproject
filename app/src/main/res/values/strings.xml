@@ -19,4 +19,9 @@
     <string name="version">Version</string>
     <string name="contact">Contact us</string>
     <string name="history_list">History list</string>
+    <string name="check">Check your internet connection</string>
+    <string name="network_info">No default network is currently active</string>
+    <string name="network_connected">Network is not connected</string>
+    <string name="network_available">Network is not available</string>
+    <string name="network_confirm">Network is connected</string>
 </resources>

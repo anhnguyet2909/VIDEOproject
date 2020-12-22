@@ -19,4 +19,9 @@
     <string name="version">Phiên bản</string>
     <string name="contact">Liên hệ</string>
     <string name="history_list">Lịch sử xem</string>
+    <string name="check">Kiểm tra kết nối internet</string>
+    <string name="network_info">Không có kết nối internet mặc định đang hoạt động</string>
+    <string name="network_connected">Không có kết nối internet</string>
+    <string name="network_available">Kết nối internet không khả dụng</string>
+    <string name="network_confirm">Đã kết nối internet</string>
 </resources>
