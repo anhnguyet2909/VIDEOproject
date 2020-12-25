@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,60 +33,57 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class HotVideosFragment extends Fragment {
     FragmentHotvideosBinding binding;
 
     AdapterPhoto adapterPhoto;
     List<Image> imageList;
     Timer timer;
-
-    String hotVideosURL= DeFile.HOT_VIDEOS_URL;
-    String result = "";
-    String jArray = "";
-    List<HotVideos> list=new ArrayList<>();
+    List<HotVideos> list = new ArrayList<>();
     AdapterHotVideos adapterHotVideos;
 
-    class GetData extends AsyncTask<Void, Void, Void>{
+    public static HotVideosFragment newInstance() {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+        Bundle args = new Bundle();
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                URL url = new URL(hotVideosURL);
-                URLConnection connection = url.openConnection();
-                InputStream inputStream = connection.getInputStream();
+        HotVideosFragment fragment = new HotVideosFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-                int byteCharacter;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hotvideos, container, false);
+        imageList = getListPhoto();
+        adapterPhoto = new AdapterPhoto(getContext(), imageList);
+        binding.viewPhoto.setAdapter(adapterPhoto);
+        binding.circleIndicator.setViewPager(binding.viewPhoto);
+        adapterPhoto.registerDataSetObserver(binding.circleIndicator.getDataSetObserver());
+        autoSlide();
 
-                while ((byteCharacter = inputStream.read()) != -1) {
-                    result+=(char)byteCharacter;
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://demo3134737.mockable.io/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GetHotVideoAPI getHotVideoAPI = retrofit.create(GetHotVideoAPI.class);
+        Call<List<HotVideos>> call = getHotVideoAPI.getHotVideo();
+        call.enqueue(new Callback<List<HotVideos>>() {
+            @Override
+            public void onResponse(Call<List<HotVideos>> call, Response<List<HotVideos>> response) {
+                if (!response.isSuccessful()) {
+                    binding.load.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getContext(), response.code() + "", Toast.LENGTH_LONG).show();
+                    return;
                 }
-                jArray=result;
-                binding.load.setVisibility(View.VISIBLE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            binding.load.setVisibility(View.INVISIBLE);
-            try {
-                JSONArray jsonArray=new JSONArray(jArray);
-                for(int i=0; i<jsonArray.length(); i++){
-                    JSONObject jsonObject=jsonArray.getJSONObject(i);
-                    int id=jsonObject.getInt(DeFile.ID);
-                    String title=jsonObject.getString(DeFile.TITLE);
-                    String avatar=jsonObject.getString(DeFile.AVATAR);
-                    String file_mp4=jsonObject.getString(DeFile.FILE_MP4);
-                    HotVideos hv=new HotVideos(id,title,avatar,file_mp4);
-                    list.add(hv);
-                }
+                binding.load.setVisibility(View.INVISIBLE);
+                list=response.body();
                 adapterHotVideos=new AdapterHotVideos(list);
                 RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                 binding.rvHotVideos.setLayoutManager(layoutManager);
@@ -105,38 +103,20 @@ public class HotVideosFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-            } catch (Exception e) {
-                e.printStackTrace();
+
             }
-        }
-    }
 
-    public static HotVideosFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        HotVideosFragment fragment = new HotVideosFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding= DataBindingUtil.inflate(inflater, R.layout.fragment_hotvideos, container, false);
-        imageList=getListPhoto();
-        adapterPhoto=new AdapterPhoto(getContext(), imageList);
-        binding.viewPhoto.setAdapter(adapterPhoto);
-        binding.circleIndicator.setViewPager(binding.viewPhoto);
-        adapterPhoto.registerDataSetObserver(binding.circleIndicator.getDataSetObserver());
-        autoSlide();
-        new GetData().execute();
-
+            @Override
+            public void onFailure(Call<List<HotVideos>> call, Throwable t) {
+                binding.load.setVisibility(View.INVISIBLE);
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
         return binding.getRoot();
     }
 
     private List<Image> getListPhoto() {
-        List<Image> list=new ArrayList<>();
+        List<Image> list = new ArrayList<>();
 
         list.add(new Image(R.drawable.op1));
         list.add(new Image(R.drawable.it2));
@@ -150,18 +130,18 @@ public class HotVideosFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(timer!=null){
+        if (timer != null) {
             timer.cancel();
-            timer=null;
+            timer = null;
         }
     }
 
-    private void autoSlide(){
-        if(imageList==null  || imageList.isEmpty() || binding.viewPhoto==null){
+    private void autoSlide() {
+        if (imageList == null || imageList.isEmpty() || binding.viewPhoto == null) {
             return;
         }
-        if(timer==null){
-            timer=new Timer();
+        if (timer == null) {
+            timer = new Timer();
         }
         timer.schedule(new TimerTask() {
             @Override
@@ -169,13 +149,12 @@ public class HotVideosFragment extends Fragment {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        int currentItem=binding.viewPhoto.getCurrentItem();
-                        int totalItem=imageList.size()-1;
-                        if(currentItem<totalItem){
+                        int currentItem = binding.viewPhoto.getCurrentItem();
+                        int totalItem = imageList.size() - 1;
+                        if (currentItem < totalItem) {
                             currentItem++;
                             binding.viewPhoto.setCurrentItem(currentItem);
-                        }
-                        else{
+                        } else {
                             binding.viewPhoto.setCurrentItem(0);
                         }
                     }

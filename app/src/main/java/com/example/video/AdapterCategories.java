@@ -41,7 +41,7 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.Vi
     @Override
     public void onBindViewHolder(@NonNull AdapterCategories.ViewHolder holder, int position) {
         final Categories cate=list.get(position);
-        Picasso.get().load(cate.getThumb()).into(holder.imgThumb);
+        Picasso.get().load(cate.getThumb()).fit().into(holder.imgThumb);
         holder.tvThumb.setText(cate.getTitle());
         holder.rlCate.setOnClickListener(new View.OnClickListener() {
             @Override

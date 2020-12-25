@@ -38,6 +38,12 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class ShowVideoActivity extends AppCompatActivity {
     ActivityShowVideoBinding binding;
     private SimpleExoPlayer player;
@@ -71,8 +77,6 @@ public class ShowVideoActivity extends AppCompatActivity {
         avt = sharedPreferences.getString("avt", "");
         id = sharedPreferences.getInt("id", 0);
         video = new HotVideos(id, name, avt, videoURL);
-
-        new GetData().execute();
 
         dialog=new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen){
             @Override
@@ -207,6 +211,46 @@ public class ShowVideoActivity extends AppCompatActivity {
             binding.imgLike.setVisibility(View.VISIBLE);
         }
         rate();
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl("https://demo3134737.mockable.io/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GetHotVideoAPI getHotVideoAPI=retrofit.create(GetHotVideoAPI.class);
+        Call<List<HotVideos>> call=getHotVideoAPI.getRelatedVideo();
+        call.enqueue(new Callback<List<HotVideos>>() {
+            @Override
+            public void onResponse(Call<List<HotVideos>> call, Response<List<HotVideos>> response) {
+                binding.pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful()){
+                    Toast.makeText(getBaseContext(), response.code() + "", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                list=response.body();
+                adapterRelatedVideos = new AdapterRelatedVideos(list);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), RecyclerView.VERTICAL, false);
+                binding.rvRelativeVideos.setLayoutManager(layoutManager);
+                binding.rvRelativeVideos.setAdapter(adapterRelatedVideos);
+                adapterRelatedVideos.setOnItemClick(new onItemClick() {
+                    @Override
+                    public void onImageViewClick(HotVideos videos) {
+                        id = videos.getId();
+                        name = videos.getTitle();
+                        avt = videos.getAvatar();
+                        videoURL = videos.getFile_mp4();
+                        player.setPlayWhenReady(false);
+                        binding.imgUnlike.setVisibility(View.VISIBLE);
+                        binding.imgLike.setVisibility(View.INVISIBLE);
+                        initializePlayer();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<List<HotVideos>> call, Throwable t) {
+                binding.pbLoading.setVisibility(View.INVISIBLE);
+                Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -258,64 +302,5 @@ public class ShowVideoActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         adsLoader.release();
-    }
-
-    class GetData extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                URL url = new URL(relatedVideos);
-                URLConnection connection = url.openConnection();
-                InputStream inputStream = connection.getInputStream();
-
-                int byteCharacter;
-
-                while ((byteCharacter = inputStream.read()) != -1) {
-                    result += (char) byteCharacter;
-                }
-                jArray = result;
-                binding.pbLoading.setVisibility(View.VISIBLE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            binding.pbLoading.setVisibility(View.INVISIBLE);
-            try {
-                JSONArray jsonArray = new JSONArray(jArray);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    int id = jsonObject.getInt(DeFile.ID);
-                    String title = jsonObject.getString(DeFile.TITLE);
-                    String avatar = jsonObject.getString(DeFile.AVATAR);
-                    String file_mp4 = jsonObject.getString(DeFile.FILE_MP4);
-                    HotVideos hv = new HotVideos(id, title, avatar, file_mp4);
-                    list.add(hv);
-                }
-                adapterRelatedVideos = new AdapterRelatedVideos(list);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), RecyclerView.VERTICAL, false);
-                binding.rvRelativeVideos.setLayoutManager(layoutManager);
-                binding.rvRelativeVideos.setAdapter(adapterRelatedVideos);
-                adapterRelatedVideos.setOnItemClick(new onItemClick() {
-                    @Override
-                    public void onImageViewClick(HotVideos videos) {
-                        id = videos.getId();
-                        name = videos.getTitle();
-                        avt = videos.getAvatar();
-                        videoURL = videos.getFile_mp4();
-                        player.setPlayWhenReady(false);
-                        binding.imgUnlike.setVisibility(View.VISIBLE);
-                        binding.imgLike.setVisibility(View.INVISIBLE);
-                        initializePlayer();
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
