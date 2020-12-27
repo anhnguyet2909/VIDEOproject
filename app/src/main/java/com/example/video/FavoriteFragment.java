@@ -15,12 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.example.video.databinding.FragmentFavoriteBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteFragment extends Fragment {
+    boolean check=false;
     FragmentFavoriteBinding binding;
     List<HotVideos> list=new ArrayList<>();
     AdapterFavorite adapterFavorite;
@@ -44,6 +46,27 @@ public class FavoriteFragment extends Fragment {
 
         sqlHelperFavorite=new SQLHelperFavorite(getContext());
 
+        click();
+
+        binding.refresh.setRefreshStyle(PullRefreshLayout.STYLE_RING);
+        binding.refresh.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.refresh.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.refresh.setRefreshing(false);
+                        sqlHelperFavorite=new SQLHelperFavorite(getContext());
+                        click();
+                    }
+                }, 200);
+            }
+        });
+
+        return binding.getRoot();
+    }
+
+    public void click(){
         list=sqlHelperFavorite.getAllVideos();
         adapterFavorite=new AdapterFavorite(list);
 
@@ -60,11 +83,11 @@ public class FavoriteFragment extends Fragment {
                 editor.putString("name", videos.getTitle());
                 editor.putString("avt", videos.getAvatar());
                 editor.putInt("id", videos.getId());
+                editor.putInt("flag", 1);
                 editor.commit();
                 startActivity(intent);
             }
         });
-        return binding.getRoot();
     }
 
 }

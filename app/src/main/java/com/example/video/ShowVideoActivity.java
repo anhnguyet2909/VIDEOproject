@@ -2,6 +2,7 @@ package com.example.video;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -54,6 +55,7 @@ public class ShowVideoActivity extends AppCompatActivity {
     SQLHelperHistory sqlHelperHistory = new SQLHelperHistory(this);
     String name, videoURL, avt;
     int id;
+    int print;
     String relatedVideos = DeFile.GET_RELATED_VIDEOS_URL;
     String result = "";
     String jArray = "";
@@ -76,6 +78,7 @@ public class ShowVideoActivity extends AppCompatActivity {
         videoURL = sharedPreferences.getString("link", "");
         avt = sharedPreferences.getString("avt", "");
         id = sharedPreferences.getInt("id", 0);
+        print=sharedPreferences.getInt("flag", 0);
         video = new HotVideos(id, name, avt, videoURL);
 
         dialog=new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen){

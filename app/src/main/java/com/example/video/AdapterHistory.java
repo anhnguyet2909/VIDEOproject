@@ -40,7 +40,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
     @Override
     public void onBindViewHolder(@NonNull AdapterHistory.ViewHolder holder, int position) {
         final HotVideos hv=list.get(position);
-        Picasso.get().load(hv.getAvatar()).into(holder.imgVideoThumb);
+        Picasso.get().load(hv.getAvatar()).fit().into(holder.imgVideoThumb);
         holder.tvVideoTitle.setText(hv.getTitle());
         holder.rvVideoThumb.setOnClickListener(new View.OnClickListener() {
             @Override

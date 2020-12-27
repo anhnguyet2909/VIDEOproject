@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/_10sdp">
         <TextView
+            android:id="@+id/title"
             android:textSize="@dimen/_16sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/favorite_list"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="@dimen/_25sdp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rvFavorite"/>
-    </RelativeLayout>
+        <com.baoyz.widget.PullRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:refreshType="water_drop">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rvFavorite"/>
+        </com.baoyz.widget.PullRefreshLayout>
+
+    </LinearLayout>
 </layout>

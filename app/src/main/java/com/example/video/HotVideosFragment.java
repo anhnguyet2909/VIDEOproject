@@ -99,6 +99,7 @@ public class HotVideosFragment extends Fragment {
                         editor.putString("name", videos.getTitle());
                         editor.putString("avt", videos.getAvatar());
                         editor.putInt("id", videos.getId());
+                        editor.putInt("flag", 0);
                         editor.commit();
                         startActivity(intent);
                     }
