@@ -71,7 +71,7 @@ public class ShowVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_show_video);
-        adsLoader = new ImaAdsLoader(this, Uri.parse(getString(R.string.ad_tag_url)));
+
 
         SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("data1", Context.MODE_PRIVATE);
         name = sharedPreferences.getString("name", "");
@@ -112,6 +112,47 @@ public class ShowVideoActivity extends AppCompatActivity {
                 player.setPlayWhenReady(false);
                 check = true;
                 btnPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24));
+            }
+        });
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl("https://demo3134737.mockable.io/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GetHotVideoAPI getHotVideoAPI=retrofit.create(GetHotVideoAPI.class);
+        Call<List<HotVideos>> call=getHotVideoAPI.getRelatedVideo();
+        call.enqueue(new Callback<List<HotVideos>>() {
+            @Override
+            public void onResponse(Call<List<HotVideos>> call, Response<List<HotVideos>> response) {
+                binding.pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful()){
+                    Toast.makeText(getBaseContext(), response.code() + "", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                list=response.body();
+                adapterRelatedVideos = new AdapterRelatedVideos(list);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), RecyclerView.VERTICAL, false);
+                binding.rvRelativeVideos.setLayoutManager(layoutManager);
+                binding.rvRelativeVideos.setAdapter(adapterRelatedVideos);
+                adapterRelatedVideos.setOnItemClick(new onItemClick() {
+                    @Override
+                    public void onImageViewClick(HotVideos videos) {
+                        id = videos.getId();
+                        name = videos.getTitle();
+                        avt = videos.getAvatar();
+                        videoURL = videos.getFile_mp4();
+                        video=new HotVideos(id, name,avt, videoURL);
+                        player.setPlayWhenReady(false);
+                        binding.imgUnlike.setVisibility(View.VISIBLE);
+                        binding.imgLike.setVisibility(View.INVISIBLE);
+                        initializePlayer();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<List<HotVideos>> call, Throwable t) {
+                binding.pbLoading.setVisibility(View.INVISIBLE);
+                Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -180,6 +221,7 @@ public class ShowVideoActivity extends AppCompatActivity {
 
     private void initializePlayer() {
         // Create a SimpleExoPlayer and set it as the player for content and ads.
+        adsLoader = new ImaAdsLoader(this, Uri.parse(getString(R.string.ad_tag_url)));
         player = new SimpleExoPlayer.Builder(this).build();
 
         HotVideos v = new HotVideos(id, name, avt, videoURL);
@@ -208,52 +250,13 @@ public class ShowVideoActivity extends AppCompatActivity {
 
         // Set PlayWhenReady. If true, content and ads autoplay.
         player.setPlayWhenReady(true);
-        like();
-        if (sqlHelperFavorite.checkLike(v)) {
+
+        if (sqlHelperFavorite.checkLike(id)) {
             binding.imgUnlike.setVisibility(View.INVISIBLE);
             binding.imgLike.setVisibility(View.VISIBLE);
         }
+        like();
         rate();
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("https://demo3134737.mockable.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        GetHotVideoAPI getHotVideoAPI=retrofit.create(GetHotVideoAPI.class);
-        Call<List<HotVideos>> call=getHotVideoAPI.getRelatedVideo();
-        call.enqueue(new Callback<List<HotVideos>>() {
-            @Override
-            public void onResponse(Call<List<HotVideos>> call, Response<List<HotVideos>> response) {
-                binding.pbLoading.setVisibility(View.INVISIBLE);
-                if(!response.isSuccessful()){
-                    Toast.makeText(getBaseContext(), response.code() + "", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                list=response.body();
-                adapterRelatedVideos = new AdapterRelatedVideos(list);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), RecyclerView.VERTICAL, false);
-                binding.rvRelativeVideos.setLayoutManager(layoutManager);
-                binding.rvRelativeVideos.setAdapter(adapterRelatedVideos);
-                adapterRelatedVideos.setOnItemClick(new onItemClick() {
-                    @Override
-                    public void onImageViewClick(HotVideos videos) {
-                        id = videos.getId();
-                        name = videos.getTitle();
-                        avt = videos.getAvatar();
-                        videoURL = videos.getFile_mp4();
-                        player.setPlayWhenReady(false);
-                        binding.imgUnlike.setVisibility(View.VISIBLE);
-                        binding.imgLike.setVisibility(View.INVISIBLE);
-                        initializePlayer();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Call<List<HotVideos>> call, Throwable t) {
-                binding.pbLoading.setVisibility(View.INVISIBLE);
-                Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     @Override

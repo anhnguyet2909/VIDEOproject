@@ -3,7 +3,6 @@ package com.example.video;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,15 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.video.databinding.FragmentHotvideosBinding;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -38,6 +34,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class HotVideosFragment extends Fragment {
     FragmentHotvideosBinding binding;
@@ -65,6 +66,14 @@ public class HotVideosFragment extends Fragment {
         adapterPhoto = new AdapterPhoto(getContext(), imageList);
         binding.viewPhoto.setAdapter(adapterPhoto);
         binding.circleIndicator.setViewPager(binding.viewPhoto);
+        MobileAds.initialize(getContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
         adapterPhoto.registerDataSetObserver(binding.circleIndicator.getDataSetObserver());
         autoSlide();
 
@@ -119,11 +128,11 @@ public class HotVideosFragment extends Fragment {
     private List<Image> getListPhoto() {
         List<Image> list = new ArrayList<>();
 
-        list.add(new Image(R.drawable.op1));
-        list.add(new Image(R.drawable.it2));
-        list.add(new Image(R.drawable.dctc));
-        list.add(new Image(R.drawable.conan));
-        list.add(new Image(R.drawable.trailer4));
+        list.add(new Image(R.drawable.onepiece));
+        list.add(new Image(R.drawable.it2_banner));
+        list.add(new Image(R.drawable.vdlh));
+        list.add(new Image(R.drawable.casau));
+        list.add(new Image(R.drawable.conan_banner));
 
         return list;
     }
