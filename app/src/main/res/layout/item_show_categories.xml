@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/_5sdp"
     android:id="@+id/llVideo"
     android:padding="@dimen/_5sdp"
-    android:layout_width="@dimen/_150sdp"
+    android:layout_width="@dimen/_145sdp"
+    android:background="@drawable/bg_cate_video"
     android:layout_height="@dimen/_180sdp"
     android:orientation="vertical">
 

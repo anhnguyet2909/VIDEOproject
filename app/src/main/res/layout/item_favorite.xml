@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_100sdp"
+    android:layout_height="@dimen/_103sdp"
     android:padding="@dimen/_5sdp"
     android:id="@+id/llVideos">
 
-    <RelativeLayout
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="match_parent"
-        android:id="@+id/rlVideoThumb">
-        <ImageView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:orientation="horizontal">
+        <RelativeLayout
             android:layout_width="@dimen/_150sdp"
             android:layout_height="match_parent"
-            android:id="@+id/imgVideoThumb"/>
-        <ImageView
-            android:background="@drawable/bg_btn_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_baseline_play_arrow_24"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:layout_width="@dimen/_140sdp"
+            android:id="@+id/rlVideoThumb">
+            <ImageView
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="match_parent"
+                android:id="@+id/imgVideoThumb"/>
+            <ImageView
+                android:background="@drawable/bg_btn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_baseline_play_arrow_24"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/tvVideoTitle"/>
-        <ImageView
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnClear"
-            android:background="@drawable/bg_btn_clear"
-            android:src="@drawable/ic_baseline_clear_24" />
-    </RelativeLayout>
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_width="@dimen/_140sdp"
+                android:layout_height="match_parent"
+                android:id="@+id/tvVideoTitle"/>
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnClear"
+                android:background="@drawable/bg_btn_clear"
+                android:src="@drawable/ic_baseline_clear_24" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/lightGrey"/>
 
 </LinearLayout>

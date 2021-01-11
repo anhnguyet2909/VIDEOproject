@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_100sdp"
+    android:layout_height="@dimen/_103sdp"
     android:padding="@dimen/_5sdp"
     android:id="@+id/llVideos">
 
-    <RelativeLayout
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="match_parent"
-        android:id="@+id/rlVideoThumb">
-        <ImageView
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="match_parent"
-            android:id="@+id/imgVideoThumb"/>
-        <ImageView
-            android:background="@drawable/bg_btn_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_baseline_play_arrow_24"/>
-    </RelativeLayout>
-    <TextView
-        android:padding="@dimen/_10sdp"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tvVideoTitle"/>
+        android:layout_height="@dimen/_90sdp">
+        <RelativeLayout
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:id="@+id/rlVideoThumb">
+            <ImageView
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="match_parent"
+                android:id="@+id/imgVideoThumb"/>
+            <ImageView
+                android:background="@drawable/bg_btn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_baseline_play_arrow_24"/>
+        </RelativeLayout>
+        <TextView
+            android:textColor="@color/white"
+            android:padding="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_90sdp"
+            android:id="@+id/tvVideoTitle"/>
 
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/lightGrey"/>
 </LinearLayout>

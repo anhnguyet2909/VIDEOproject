@@ -71,9 +71,24 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void onClearClick(int position) {
-                sqlHelperHistory.deleteVideo(list.get(position).getId());
-                list.remove(position);
-                adapterHistory.notifyDataSetChanged();
+                AlertDialog alertDialog=new AlertDialog.Builder(getContext())
+                        .setTitle(getString(R.string.delete_video_confirm))
+                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                sqlHelperHistory.deleteVideo(list.get(position).getId());
+                                list.remove(position);
+                                adapterHistory.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .create();
+                alertDialog.show();
             }
         });
 

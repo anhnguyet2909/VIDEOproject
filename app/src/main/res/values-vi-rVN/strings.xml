@@ -24,4 +24,5 @@
     <string name="network_connected">Không có kết nối internet</string>
     <string name="network_available">Kết nối internet không khả dụng</string>
     <string name="network_confirm">Đã kết nối internet</string>
+    <string name="delete_video_confirm">Bạn chắc chắn muốn xóa video này khỏi lịch sử xem?</string>
 </resources>
