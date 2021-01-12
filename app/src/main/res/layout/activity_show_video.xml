@@ -56,6 +56,15 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textStyle="italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/content"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/light_blue"/>
+        
         <LinearLayout
             android:id="@+id/llRating"
             android:layout_width="match_parent"

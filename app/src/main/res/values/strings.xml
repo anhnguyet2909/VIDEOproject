@@ -4,6 +4,7 @@
     <string name="relative_video">Related videos</string>
     <string name="delete_confirm">Are you sure you want to delete your viewing history?</string>
     <string name="delete_video_confirm">Are you sure you want to delete this video from your history?</string>
+    <string name="content" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet eu mi quis lacinia. Ut fermentum a magna ut.</string>
     <string name="deleted">Deleted view history</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

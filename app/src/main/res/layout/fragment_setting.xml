@@ -3,66 +3,94 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/_15sdp">
-        <!--        <RelativeLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Night mode"-->
-        <!--                android:textSize="@dimen/_13sdp"/>-->
-        <!--            <Switch-->
-        <!--                android:layout_alignParentRight="true"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"/>-->
-        <!--        </RelativeLayout>-->
-        <TextView
-            android:id="@+id/tvTerm"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:padding="@dimen/_15sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_assignment_24"
-            android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-            android:text="@string/term" />
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:src="@drawable/lucky"/>
+            <LinearLayout
+                android:paddingLeft="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vũ Thị Ánh Nguyệt"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="anhnguyet@gmail.com"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
         <View
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="#CB878484"/>
-        <RelativeLayout
-            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/lightGrey"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_15sdp">
 
             <TextView
+                android:id="@+id/tvTerm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_baseline_info_24"
-                android:text="@string/version" />
+                android:drawableLeft="@drawable/ic_baseline_assignment_24"
+                android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+                android:text="@string/term" />
+            <View
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="#CB878484"/>
+            <RelativeLayout
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_info_24"
+                    android:text="@string/version" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="1.0.0" />
+            </RelativeLayout>
+
+            <View
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="#CB878484"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvContact"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="1.0.0" />
-        </RelativeLayout>
-
-        <View
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="#CB878484"/>
-
-        <TextView
-            android:id="@+id/tvContact"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_email_24"
-            android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-            android:text="@string/contact" />
+                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+                android:text="@string/contact" />
+        </LinearLayout>
     </LinearLayout>
 
 </layout>

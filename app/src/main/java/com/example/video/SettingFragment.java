@@ -1,6 +1,7 @@
 package com.example.video;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +10,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.video.databinding.FragmentSettingBinding;
 
 public class SettingFragment extends Fragment {
@@ -44,6 +50,8 @@ public class SettingFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        Glide.with(getContext()).load(R.drawable.lucky).apply(RequestOptions.circleCropTransform()).into(binding.imgAvatar);
         return binding.getRoot();
     }
 }
